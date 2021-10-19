@@ -1,5 +1,7 @@
 package com.telecom.stepdefinition;
 
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -11,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class AddCustomerSteps {
@@ -55,8 +58,33 @@ public class AddCustomerSteps {
 		 WebElement equal = driver.findElement(By.xpath("(//*//tr//td)[3]"));
 		    System.out.println(equal.getText());
 		    Assert.assertNotEquals(equal, "Please Note Down Your CustomerID");
-		  
-	   
+		    driver.quit();
+	}
+	
+	@When("User enter all the fields by one dim list concept")
+	 public void user_enter_all_the_fields_by_one_dim_list_concept(DataTable dataTable) {
+		List<String> data = dataTable.asList(String.class);
+		
+		   driver.findElement(By.xpath("//*[@for='done']")).click();
+		   driver.findElement(By.id("fname")).sendKeys(data.get(0));
+		   driver.findElement(By.id("lname")).sendKeys(data.get(1));
+		   driver.findElement(By.id("email")).sendKeys(data.get(2));
+		   driver.findElement(By.name("addr")).sendKeys(data.get(3));
+		   driver.findElement(By.id("telephoneno")).sendKeys(data.get(4));
+		        
+		    }
+	@When("User enter all the fields by one dim map concept")
+	 public void user_enter_all_the_fields_by_one_dim_map_concepts(DataTable dataTable){
+		
+		Map<String,String> data = dataTable.asMap(String.class,String.class);
+		
+		   driver.findElement(By.xpath("//*[@for='done']")).click();
+		   driver.findElement(By.id("fname")).sendKeys(data.get("fname"));
+		   driver.findElement(By.id("lname")).sendKeys(data.get("lname"));
+		   driver.findElement(By.id("email")).sendKeys(data.get("mail"));
+		   driver.findElement(By.name("addr")).sendKeys(data.get("address"));
+		   driver.findElement(By.id("telephoneno")).sendKeys(data.get("phono"));
+		        
+		    }
 
-}
 }
