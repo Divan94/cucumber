@@ -86,5 +86,17 @@ public class AddCustomerSteps {
 		   driver.findElement(By.id("telephoneno")).sendKeys(data.get("phono"));
 		        
 		    }
+	@When("User enter all the fields {string},{string},{string},{string},{string}")
+	public void user_enter_all_the_fields(String fname, String lname, String mail, String address, String phono){
+		
+		driver.findElement(By.xpath("//*[@for='done']")).click();
+		   driver.findElement(By.id("fname")).sendKeys(fname);
+		   driver.findElement(By.id("lname")).sendKeys(lname);
+		   driver.findElement(By.id("email")).sendKeys(mail);
+		   driver.findElement(By.name("addr")).sendKeys(address);
+		   driver.findElement(By.id("telephoneno")).sendKeys(phono);
+	    
+	}
+
 
 }
