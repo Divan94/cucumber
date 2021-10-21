@@ -1,4 +1,5 @@
  #Author: Divakar.email@your.domain.com
+ @sce
 Feature: Add Customer flow validation
 
 Background:
