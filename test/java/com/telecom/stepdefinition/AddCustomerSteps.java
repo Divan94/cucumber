@@ -10,13 +10,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.telecom.objectrepository.AddCustomerePage;
+import com.telecom.resources.CommonActions;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.cucumber.datatable.DataTable;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class AddCustomerSteps {
+public class AddCustomerSteps extends CommonActions {
+	
+	CommonActions ca = new CommonActions();
+	AddCustomerePage ap = new AddCustomerePage();
+	
 	
     static WebDriver driver;
 	@Given("User launches demo telecom application")
@@ -24,7 +31,6 @@ public class AddCustomerSteps {
 	   
 		WebDriverManager.chromedriver().setup();
 		driver = new ChromeDriver();
-		driver.get("http://www.demo.guru99.com/telecom/");
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
@@ -32,24 +38,25 @@ public class AddCustomerSteps {
 	@Given("User click on add customer button")
 	public void user_click_on_add_customer_button() {
 		
-	    driver.findElement(By.xpath("(//*[text()='Add Customer'])[1]")).click();
+	    ca.button(ap.getCustomerButton());
 	}
 
 	@When("User enter all the fields")
 	public void user_enter_all_the_fields() {
 		
-	   driver.findElement(By.xpath("//*[@for='done']")).click();
-	   driver.findElement(By.id("fname")).sendKeys("Divakar");
-	   driver.findElement(By.id("lname")).sendKeys("R");
-	   driver.findElement(By.id("email")).sendKeys("divakar.r0610@gmail.com");
-	   driver.findElement(By.name("addr")).sendKeys("Chennai");
-	   driver.findElement(By.id("telephoneno")).sendKeys("8682844259");
+	   ca.button(ap.getDoneButton());
+	   ca.insertText(ap.getFirstName(), "Divakar");
+	   ca.insertText(ap.getLastName(), "R");
+	   ca.insertText(ap.getMail(), "divakar.r0610@gmail.com");
+	   ca.insertText(ap.getAddress(), "Chennai");
+	   ca.insertText(ap.getPhono(), "8682844259");
+	   
 	}
 
 	@When("User click on submit button")
 	public void user_click_on_submit_button() {
 		
-	driver.findElement(By.xpath("//*[@value='Submit']")).click();
+	ca.button(ap.getSubmitButton());
 	   
 	}
 
@@ -58,19 +65,19 @@ public class AddCustomerSteps {
 		 WebElement equal = driver.findElement(By.xpath("(//*//tr//td)[3]"));
 		    System.out.println(equal.getText());
 		    Assert.assertNotEquals(equal, "Please Note Down Your CustomerID");
-		    driver.quit();
+		    
 	}
 	
 	@When("User enter all the fields by one dim list concept")
 	 public void user_enter_all_the_fields_by_one_dim_list_concept(DataTable dataTable) {
 		List<String> data = dataTable.asList(String.class);
 		
-		   driver.findElement(By.xpath("//*[@for='done']")).click();
-		   driver.findElement(By.id("fname")).sendKeys(data.get(0));
-		   driver.findElement(By.id("lname")).sendKeys(data.get(1));
-		   driver.findElement(By.id("email")).sendKeys(data.get(2));
-		   driver.findElement(By.name("addr")).sendKeys(data.get(3));
-		   driver.findElement(By.id("telephoneno")).sendKeys(data.get(4));
+		   ca.button(ap.getDoneButton());
+		   ca.insertText(ap.getFirstName(), data.get(0));
+		   ca.insertText(ap.getLastName(), data.get(1));
+		   ca.insertText(ap.getMail(), data.get(2));
+		   ca.insertText(ap.getAddress(),data.get(3));
+		   ca.insertText(ap.getPhono(), data.get(4));
 		        
 		    }
 	@When("User enter all the fields by one dim map concept")
